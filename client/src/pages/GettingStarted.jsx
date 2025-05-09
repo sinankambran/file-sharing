@@ -1,5 +1,5 @@
 import React from 'react'
-import GetStartPage from '../components/getStartPage'
+import GetStartPage from '../components/GetStartPage'
 
 function gettingStartedPage() {
   return (
