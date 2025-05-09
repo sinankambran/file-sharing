@@ -1,0 +1,48 @@
+
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+/* Container Styles */
+/* .ubuntu-light {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+} */
+
+/* .container {
+  background-image: url();
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+} */
+
+/* Button Styles */
+/* button {
+  background-color: white;
+  color: maroon;
+  border: 2px solid maroon;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* Link Styles */
+/* a {
+  flex: 1;
+  overflow-wrap: anywhere;
+  color: #F8BEBE;
+  text-decoration: underline;
+  margin-bottom: 10px;
+} */
+
+/* Copy Button Checkmark */
+/* button span {
+  color: green;
+} */
