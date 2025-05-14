@@ -88,7 +88,7 @@ function Home() {
       navigate("/home");
     } catch (err) {
       console.error("Logout failed", err);
-    }
+    };
   };
 
   useEffect(() => {
