@@ -17,6 +17,11 @@ function Home() {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
+  const BASE_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:9000"
+      : import.meta.env.VITE_BACKEND_URL;
+
   useEffect(() => {
     if (!isLoggedIn) navigate("/home");
   }, [isLoggedIn, navigate]);
@@ -83,14 +88,10 @@ function Home() {
 
   const handleLogout = async () => {
     try {
-      fetch(
-        "https://file-sharing-8cell4530-sinankambrans-projects.vercel.app/auth/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-
+      await fetch(`${BASE_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
       localStorage.removeItem("loggedIn");
       navigate("/home");
     } catch (err) {

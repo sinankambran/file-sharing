@@ -7,11 +7,11 @@ import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 9000;
 
-// ✅ CORS setup: allow your frontend domain
+
 app.use(
   cors({
-    origin: "http://file-sharing-server-nccmpe1na-sinankambrans-projects.vercel.app", // allow only your frontend
-    credentials: true, // enable cookies/session if needed
+    origin: ["http://file-sharing-server-nccmpe1na-sinankambrans-projects.vercel.app"], // allow only your frontend
+    credentials: true, 
   })
 );
 
