@@ -39,6 +39,9 @@ export const UploadController = async (req, res) => {
 export const DownloadController = async (req, res) => {
   try {
     const file = await fileModel.findById(req.params.fileId);
+   
+    
+    
 
     if (!file) {
       return res.status(404).json({ message: "File not found" });

@@ -11,6 +11,7 @@ function Home() {
   const [copied, setCopied] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState(null);
 
   const uploadRef = useRef();
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ function Home() {
     data.append("upload_preset", "First_time_using_cloudinary");
 
     try {
+      setUploading(true);
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/dzyet3cyh/image/upload",
         {
@@ -60,9 +62,13 @@ function Home() {
       const uploadedImage = await res.json();
 
       if (uploadedImage.secure_url) {
-        console.log("Uploaded URL:", uploadedImage.secure_url);
-        setFile(selected);
-        // setRes(uploadedImage.secure_url);
+        setRes(uploadedImage.secure_url);
+        const downloadLink = uploadedImage.secure_url.replace(
+          "/upload/",
+          "/upload/fl_attachment/"
+        );
+        setDownloadUrl(downloadLink);
+        setShowPopup(true);
       } else {
         console.error("Upload failed", uploadedImage);
         alert("Upload failed. Check your upload preset and try again.");
@@ -70,6 +76,8 @@ function Home() {
     } catch (error) {
       console.error("Upload error", error);
       alert("Upload error. See console for details.");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -93,7 +101,15 @@ function Home() {
 
       const response = await UploadFile(formData);
       setRes(response?.path);
+      if (response?.path) {
+        const downloadLink = response.path.replace(
+          "/upload/",
+          "/upload/fl_attachment/"
+        );
+        setDownloadUrl(downloadLink);
+      }
       setShowPopup(true);
+
       setUploading(false);
     };
     upload();
@@ -162,13 +178,11 @@ function Home() {
               />
             </div>
           ) : (
-            <p className="text-red-500 font-medium">
-              Please{" "}
-              <Link to="/login" className="underline text-green-600 ">
+            <button className="bg-green-500  w-48 h-12 rounded-full flex items-center justify-center gap-2">
+              <Link to="/login" className=" text-white ">
                 log in
               </Link>{" "}
-              to upload files.
-            </p>
+            </button>
           )}
 
           {uploading && (
@@ -184,19 +198,26 @@ function Home() {
 
       {/* Modal Popup */}
       {showPopup && res && (
-        <div className="fixed inset-0 flex items-center justify-center  bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
             <h2 className="text-xl font-semibold mb-4 text-black">
               File Uploaded!
             </h2>
 
+            {/* {/\.(jpe?g|png|gif)$/i.test(res) && (
+              <img
+                src={res}
+                alt="Uploaded Preview"
+                className="w-full max-h-64 object-contain rounded mb-4"
+              />
+            )} */}
+
             <a
-              href={res}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={downloadUrl || res}
+              download
               className="block text-blue-600 underline break-words mb-4"
             >
-              {res}
+              {downloadUrl || res}
             </a>
 
             <div className="flex justify-center gap-4 mb-4">
@@ -213,13 +234,14 @@ function Home() {
                 Open
               </button>
             </div>
+
             <div className="flex justify-center mt-4">
               <QRCode value={res} size={128} />
             </div>
 
             <button
               onClick={() => setShowPopup(false)}
-              className="text-sm text-gray-500 hover:text-gray-700"
+              className="mt-4 text-sm text-gray-500 hover:text-gray-700"
             >
               Close
             </button>
