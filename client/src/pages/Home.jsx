@@ -83,7 +83,7 @@ function Home() {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:9000/auth/logout", { method: "POST" });
+      await fetch("http://file-sharing-server-nccmpe1na-sinankambrans-projects.vercel.app/auth/logout", { method: "POST" });
       localStorage.removeItem("loggedIn");
       navigate("/home");
     } catch (err) {
