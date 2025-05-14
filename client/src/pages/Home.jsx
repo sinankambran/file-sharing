@@ -5,7 +5,6 @@ import { IoMdCloudUpload } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { QRCode } from "react-qrcode-logo";
 
-
 function Home() {
   const [file, setFile] = useState(null);
   const [res, setRes] = useState(null);
@@ -84,12 +83,19 @@ function Home() {
 
   const handleLogout = async () => {
     try {
-     await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, { method: "POST" });
+      fetch(
+        "https://file-sharing-8cell4530-sinankambrans-projects.vercel.app/auth/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
       localStorage.removeItem("loggedIn");
       navigate("/home");
     } catch (err) {
       console.error("Logout failed", err);
-    };
+    }
   };
 
   useEffect(() => {
