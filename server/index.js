@@ -7,11 +7,21 @@ import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 9000;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://file-sharing-server-nccmpe1na-sinankambrans-projects.vercel.app",
+];
 
 app.use(
   cors({
-    origin: ["http://file-sharing-server-nccmpe1na-sinankambrans-projects.vercel.app"], // allow only your frontend
-    credentials: true, 
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
 
